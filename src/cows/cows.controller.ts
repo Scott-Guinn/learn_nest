@@ -17,6 +17,11 @@ export class CowsController {
     return 'Cow created.';
   }
 
+  @Put()
+  updateCow(@Body() cowToUpdate: Cow): Cow {
+    return this.cowService.updateCow(cowToUpdate);
+  }
+
   @Delete(':id')
   deleteCow(@Param('id') id: string) {
     console.log('id: ', id);

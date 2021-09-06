@@ -24,6 +24,16 @@ export class CowsService {
     this.cows.push(newCow);
   }
 
+  updateCow(cowData: Cow): any {
+    for (let i = 0; i < this.cows.length; i++) {
+      if (this.cows[i].id === cowData.id) {
+        this.cows[i] = cowData;
+        return this.cows[i];
+      }
+    }
+    return 'no cow found';
+  }
+
   deleteCow(id: string): string {
     const cowsBefore: number = this.cows.length;
     this.cows = this.cows.filter((cow) => cow.id !== id);
