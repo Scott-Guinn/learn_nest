@@ -1,13 +1,21 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { CowsService } from './cows.service';
-import { Cow } from './interfaces/cow.interface';
+import { Cow } from './cow.entity';
 
 @Controller('cows')
 export class CowsController {
   constructor(private readonly cowService: CowsService) {}
 
   @Get()
-  getCows(): Cow[] {
+  getCows(): Promise<Cow[]> {
     return this.cowService.getCows();
   }
 
@@ -18,13 +26,13 @@ export class CowsController {
   }
 
   @Put()
-  updateCow(@Body() cowToUpdate: Cow): Cow {
-    return this.cowService.updateCow(cowToUpdate);
+  async updateCow(@Body() cowToUpdate: Cow): Promise<Cow> {
+    return await this.cowService.updateCow(cowToUpdate);
   }
 
   @Delete(':id')
-  deleteCow(@Param('id') id: string) {
+  async deleteCow(@Param('id') id: string) {
     console.log('id: ', id);
-    return this.cowService.deleteCow(id);
+    await this.cowService.delete(id);
   }
 }
